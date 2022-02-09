@@ -1,4 +1,4 @@
-name: netlify
+name: gh-pages
 
 on:
   push:
@@ -57,7 +57,7 @@ jobs:
           name: build
           path: build/
 
-  deploy-to-netlify:
+  deploy-to-gh:
     environment:
       name: prod
     needs: [build]
@@ -69,11 +69,5 @@ jobs:
           name: build
           path: build/
 
-      - name: deploy to netlify
-        run: >
-          npx netlify deploy
-          --prod
-          --dir=build
-          --message="${{ github.event.commits[0].message }}"
-          --site=${{ secrets.NETLIFY_APP }}
-          --auth=${{ secrets.NETLIFY_TOKEN }}
+      - name: deploy to gh-pages
+        run: npx gh-pages -b gh-pages -d build
